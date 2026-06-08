@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Portal da Transparência - RS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-high": "#e6e8ea",
+          "surface-variant": "#e0e3e5",
+          "on-primary-fixed": "#001a40",
+          "secondary-fixed": "#d8e3fb",
+          "primary-fixed": "#d7f0e3",
+          "on-error": "#ffffff",
+          "inverse-on-surface": "#eff1f3",
+          "surface-dim": "#d8dadc",
+          "tertiary": "#334358",
+          "surface-bright": "#f7f9fb",
+          "secondary-container": "#c8efd9",
+          "error": "#ba1a1a",
+          "outline-variant": "#c2c6d4",
+          "primary-container": "#027030",
+          "surface-container-lowest": "#ffffff",
+          "on-secondary-fixed": "#111c2d",
+          "on-tertiary-fixed": "#0b1c30",
+          "on-secondary-fixed-variant": "#3c475a",
+          "surface-container-highest": "#e0e3e5",
+          "on-secondary": "#ffffff",
+          "on-tertiary-fixed-variant": "#38485d",
+          "on-tertiary-container": "#c1d1eb",
+          "background": "#f7f9fb",
+          "on-primary-container": "#a3f0c4",
+          "tertiary-container": "#4a5a70",
+          "primary": "#058239",
+          "surface-container-low": "#f2f4f6",
+          "on-tertiary": "#ffffff",
+          "on-background": "#191c1e",
+          "surface-container": "#eceef0",
+          "on-primary": "#ffffff",
+          "on-surface": "#191c1e",
+          "on-error-container": "#93000a",
+          "surface": "#f7f9fb",
+          "on-primary-fixed-variant": "#026b2e",
+          "secondary": "#3a6b4f",
+          "inverse-primary": "#74d49a",
+          "outline": "#727784",
+          "error-container": "#ffdad6",
+          "on-surface-variant": "#424752",
+          "inverse-surface": "#2d3133",
+          "tertiary-fixed-dim": "#b7c8e1",
+          "on-secondary-container": "#1a5c38",
+          "primary-fixed-dim": "#74d49a",
+          "tertiary-fixed": "#d3e4fe",
+          "surface-tint": "#058239",
+          "secondary-fixed-dim": "#9acdb3"
+        },
+        borderRadius: {
+          DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"
+        },
+        spacing: {
+          "margin-mobile": "16px", "2xl": "48px", base: "4px", lg: "24px",
+          "container-max": "1280px", gutter: "24px", sm: "8px", xl: "32px",
+          "3xl": "64px", xs: "4px", md: "16px"
+        },
+        fontFamily: { body: ["Inter"], headline: ["Inter"] },
+        fontSize: {
+          "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+          "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+          "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+          "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+          "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+          "label-md": ["14px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+          "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid #E2E8F0;
+  }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .company-link {
+    color: #058239;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: text-decoration 0.1s;
+  }
+  .company-link:hover { text-decoration: underline; }
+  #chatbot-panel { transition: opacity 0.2s ease, transform 0.2s ease; }
+  #chatbot-panel.hidden-bot { opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); }
+
+  /* Chat bubble animations */
+  .chat-bubble-in {
+    animation: bubbleIn 0.2s ease forwards;
+  }
+  @keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .typing-indicator span {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #727784;
+    animation: typing 1.2s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+  .file-drop-zone {
+    border: 2px dashed #c2c6d4;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .file-drop-zone:hover, .file-drop-zone.drag-over {
+    border-color: #058239;
+    background: rgba(5,130,57,0.04);
+  }
+  /* WhatsApp button pulse hint */
+  .whatsapp-btn {
+    position: relative;
+  }
+  .whatsapp-btn .coming-soon-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 4px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 99;
+  }
+  .whatsapp-btn .coming-soon-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1f2937;
+  }
+  .whatsapp-btn:hover .coming-soon-tooltip { display: block; }
+</style>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- PAGE: DASHBOARD -->
+<div class="page active" id="page-dashboard">
+
+  <header class="sticky top-0 z-50 flex justify-between items-center w-full px-lg py-sm bg-surface border-b border-outline-variant shadow-sm h-16">
+    <div class="flex items-center gap-xl">
+      <h1 class="text-headline-md font-bold text-primary">Portal da Transparência · RS</h1>
+    </div>
+  </header>
+
+  <!-- Global Search & Filters Bar -->
+  <section class="w-full bg-surface-container-low px-lg py-md border-b border-outline-variant">
+    <div class="max-w-container-max mx-auto flex flex-col md:flex-row gap-md items-end">
+      <div class="flex-1 w-full">
+        <label class="text-label-sm text-on-surface-variant mb-1 block">Busca Global</label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+          <input id="search-input" class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-full focus:ring-2 focus:ring-primary focus:border-primary outline-none text-body-md shadow-sm" placeholder="Pesquisar por CNPJ, Nome, Órgão ou Contrato..." type="text">
+        </div>
+      </div>
+      <div class="w-full md:w-48">
+        <label class="text-label-sm text-on-surface-variant mb-1 block">Cidade</label>
+        <select id="filter-city" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg text-body-sm focus:ring-primary outline-none">
+          <option value="">Todas as Cidades</option>
+          <option>Porto Alegre</option>
+          <option>Canoas</option>
+          <option>Caxias do Sul</option>
+          <option>Pelotas</option>
+          <option>Santa Maria</option>
+          <option>Gravataí</option>
+          <option>Viamão</option>
+          <option>Novo Hamburgo</option>
+          <option>São Leopoldo</option>
+          <option>Rio Grande</option>
+          <option>Alvorada</option>
+          <option>Ijuí</option>
+          <option>Santa Cruz do Sul</option>
+          <option>Eldorado do Sul</option>
+          <option>Passo Fundo</option>
+        </select>
+      </div>
+      <div class="w-full md:w-40">
+        <label class="text-label-sm text-on-surface-variant mb-1 block">Esfera</label>
+        <select id="filter-sphere" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg text-body-sm focus:ring-primary outline-none">
+          <option value="">Todas</option>
+          <option>Estadual</option>
+          <option>Municipal</option>
+          <option>Federal</option>
+        </select>
+      </div>
+      <div class="w-full md:w-48">
+        <label class="text-label-sm text-on-surface-variant mb-1 block">Categoria</label>
+        <select id="filter-category" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg text-body-sm focus:ring-primary outline-none">
+          <option value="">Todas</option>
+          <option>Locação de Veículos</option>
+          <option>Educação</option>
+          <option>Segurança</option>
+          <option>Infraestrutura</option>
+          <option>Saúde</option>
+          <option>Diárias</option>
+          <option>Serviços</option>
+        </select>
+      </div>
+      <div class="w-full md:w-32">
+        <label class="text-label-sm text-on-surface-variant mb-1 block">Ano</label>
+        <select id="filter-year" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg text-body-sm focus:ring-primary outline-none">
+          <option value="">Todos</option>
+          <option>2024</option>
+          <option>2023</option>
+          <option>2022</option>
+        </select>
+      </div>
+      <!-- Filtrar button -->
+      <button onclick="applyFilters()" class="bg-primary text-white h-10 px-lg rounded-lg font-semibold flex items-center justify-center hover:opacity-90 transition-opacity">Filtrar</button>
+      <!-- WhatsApp share button (em breve) -->
+      <div class="relative whatsapp-btn">
+        <span class="coming-soon-tooltip">Em breve — compartilhar via WhatsApp</span>
+        <button
+          onclick="void(0)"
+          title="Compartilhar via WhatsApp (em breve)"
+          class="h-10 px-md rounded-lg font-semibold flex items-center justify-center gap-sm border-2 border-[#25D366] text-[#25D366] bg-white hover:bg-[#25D366] hover:text-white transition-colors opacity-70 cursor-not-allowed select-none"
+          disabled
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 shrink-0">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span class="text-body-sm font-semibold hidden sm:inline">Compartilhar</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-container-max mx-auto px-lg py-xl flex gap-lg min-h-[calc(100vh-128px)]">
+
+    <!-- SideNav -->
+    <aside class="hidden lg:flex flex-col w-64 space-y-md shrink-0">
+      <div class="bg-surface-container-low p-md rounded-xl border border-outline-variant">
+        <div class="flex items-center gap-md mb-lg">
+          <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">account_balance</span>
+          </div>
+          <div>
+            <h2 class="text-label-md text-on-surface">Transparência</h2>
+            <p class="text-label-sm text-on-surface-variant">Rio Grande do Sul</p>
+          </div>
+        </div>
+        <nav class="space-y-1">
+          <button onclick="switchTab('tab-a')" id="btn-tab-a" class="w-full flex items-center gap-md p-md hover:bg-surface-variant rounded-lg transition-all text-on-surface-variant">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span class="text-label-md">Contratos e Pagamentos</span>
+          </button>
+          <button onclick="switchTab('tab-b')" id="btn-tab-b" class="w-full flex items-center gap-md p-md rounded-lg transition-all bg-secondary-container text-on-secondary-container font-bold scale-95">
+            <span class="material-symbols-outlined">business</span>
+            <span class="text-label-md">Perfil da Empresa</span>
+          </button>
+          <button onclick="switchTab('tab-c')" id="btn-tab-c" class="w-full flex items-center gap-md p-md hover:bg-surface-variant rounded-lg transition-all text-on-surface-variant">
+            <span class="material-symbols-outlined">badge</span>
+            <span class="text-label-md">Servidores Públicos</span>
+          </button>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Dynamic Content Canvas -->
+    <section class="flex-1 min-w-0">
+
+      <!-- Tab A: Contratos e Pagamentos -->
+      <div class="tab-content space-y-lg hidden" id="tab-a">
+        <div class="flex justify-between items-center mb-md">
+          <h2 class="text-headline-sm text-on-surface">Contratos e Pagamentos</h2>
+          <span id="contracts-count" class="px-3 py-1 bg-surface-container rounded-full text-label-sm">Total: 13 registros</span>
+        </div>
+        <div id="contracts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+          <!-- Cards injected by JS -->
+        </div>
+        <div id="no-results" class="hidden text-center py-xl text-on-surface-variant">
+          <span class="material-symbols-outlined text-5xl block mb-md">search_off</span>
+          Nenhum resultado encontrado para os filtros aplicados.
+        </div>
+      </div>
+
+      <!-- Tab B: Perfil da Empresa (list) -->
+      <div class="tab-content space-y-lg" id="tab-b">
+        <div class="flex justify-between items-center mb-md">
+          <h2 class="text-headline-sm text-on-surface">Empresas Fornecedoras</h2>
+        </div>
+        <div id="companies-list" class="space-y-md">
+          <!-- Company cards injected by JS -->
+        </div>
+      </div>
+
+      <!-- Tab C: Servidores -->
+      <div class="tab-content hidden" id="tab-c">
+        <div class="flex justify-between items-center mb-md">
+          <h2 class="text-headline-sm text-on-surface">Servidores Públicos</h2>
+        </div>
+        <div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+          <table class="w-full text-left">
+            <thead class="bg-surface-container-low">
+              <tr>
+                <th class="px-md py-3 text-label-sm text-outline uppercase">Nome</th>
+                <th class="px-md py-3 text-label-sm text-outline uppercase">CPF</th>
+                <th class="px-md py-3 text-label-sm text-outline uppercase">Órgão</th>
+                <th class="px-md py-3 text-label-sm text-outline uppercase text-right">Valor</th>
+                <th class="px-md py-3 text-label-sm text-outline uppercase">Descrição</th>
+                <th class="px-md py-3 text-label-sm text-outline uppercase text-center">Alertas</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+              <tr class="hover:bg-primary/5 transition-colors">
+                <td class="px-md py-4">
+                  <div class="flex items-center gap-md">
+                    <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 text-label-sm font-bold">LV</div>
+                    <span class="font-bold text-body-sm">Luiz Valdeci Vargas Rodrigues</span>
+                  </div>
+                </td>
+                <td class="px-md py-4 text-body-sm text-on-surface-variant">***.626.240-**</td>
+                <td class="px-md py-4 text-body-sm text-on-surface-variant">Secretaria da Agricultura</td>
+                <td class="px-md py-4 text-right font-bold text-body-sm">
+                  R$ 1.105,56<br>
+                  <span class="text-error">+ R$ 502,53</span>
+                </td>
+                <td class="px-md py-4 text-body-sm">Diárias civis — <span class="text-error font-semibold">mesma data</span></td>
+                <td class="px-md py-4 text-center">
+                  <span class="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-2 py-1 rounded text-[10px] font-bold border border-amber-200">
+                    <span class="material-symbols-outlined text-[14px]">warning</span> DIÁRIA DUPLA
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors">
+                <td class="px-md py-4">
+                  <div class="flex items-center gap-md">
+                    <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant text-label-sm font-bold">NL</div>
+                    <span class="font-bold text-body-sm">Nathalie de Oliveira Lunardi</span>
+                  </div>
+                </td>
+                <td class="px-md py-4 text-body-sm text-on-surface-variant">CNPJ: 47.725.716/0001-10</td>
+                <td class="px-md py-4 text-body-sm text-on-surface-variant">Secretaria da Educação</td>
+                <td class="px-md py-4 text-right font-bold text-body-sm">R$ 11.379,02</td>
+                <td class="px-md py-4 text-body-sm">Elaboração de Projetos</td>
+                <td class="px-md py-4 text-center">
+                  <span class="inline-flex items-center gap-1 bg-orange-100 text-orange-800 px-2 py-1 rounded text-[10px] font-bold border border-orange-200">
+                    <span class="material-symbols-outlined text-[14px]">gavel</span> INEXIGIBILIDADE
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-md p-md bg-amber-50 border border-amber-200 rounded-lg flex gap-md">
+          <span class="material-symbols-outlined text-amber-700">info</span>
+          <div>
+            <p class="text-label-md font-semibold text-amber-800">Alertas Detectados</p>
+            <p class="text-body-sm text-amber-700">Luiz Valdeci Vargas Rodrigues recebeu duas diárias na mesma data (15/03/2024), vinculadas ao mesmo processo, somando R$ 1.608,09. Possível acumulação indevida de diárias.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Chatbot -->
+  <div class="fixed bottom-lg right-lg z-[100] flex flex-col items-end pointer-events-none" style="width:400px; max-width: calc(100vw - 32px);">
+    <!-- Chat panel -->
+    <div id="chatbot-panel" class="hidden-bot glass-panel w-full rounded-2xl border border-outline-variant shadow-2xl flex flex-col pointer-events-auto max-h-[600px] mb-md">
+      <div class="p-md border-b border-outline-variant flex justify-between items-center bg-primary text-white rounded-t-2xl">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined">support_agent</span>
+          <div>
+            <span class="text-body-md font-semibold block leading-tight">Assistente de Transparência</span>
+            <span id="chatbot-subtitle" class="text-[11px] opacity-80"></span>
+          </div>
+        </div>
+        <button onclick="toggleChatbot()" class="hover:bg-white/10 rounded-full p-1 transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-md space-y-md custom-scrollbar">
+        <!-- messages injected by JS -->
+      </div>
+      <!-- File upload area (hidden by default) -->
+      <div id="chat-file-area" class="hidden px-md pb-md">
+        <div class="file-drop-zone" id="file-drop-zone" onclick="document.getElementById('file-input').click()">
+          <span class="material-symbols-outlined text-outline text-2xl block mb-1">attach_file</span>
+          <p class="text-body-sm text-on-surface-variant">Clique para anexar ou arraste arquivos aqui</p>
+          <p class="text-label-sm text-outline">PDF, imagem, documento (máx. 10MB)</p>
+          <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" class="hidden" onchange="handleFileSelect(this.files)">
+        </div>
+        <div id="file-list" class="mt-sm space-y-xs"></div>
+        <div class="flex gap-sm mt-sm">
+          <button onclick="skipFileUpload()" class="flex-1 py-2 border border-outline-variant rounded-lg text-body-sm text-on-surface-variant hover:bg-surface-container transition-colors">Pular esta etapa</button>
+          <button onclick="confirmFileUpload()" class="flex-1 py-2 bg-primary text-white rounded-lg text-body-sm font-semibold hover:opacity-90 transition-opacity">Confirmar anexos</button>
+        </div>
+      </div>
+      <!-- Confirm/Cancel area (hidden by default) -->
+      <div id="chat-confirm-area" class="hidden px-md pb-md">
+        <div class="flex gap-sm">
+          <button onclick="cancelDenuncia()" class="flex-1 py-2 border border-error text-error rounded-lg text-body-sm font-semibold hover:bg-red-50 transition-colors">
+            <span class="material-symbols-outlined text-[16px] mr-1">cancel</span>Cancelar
+          </button>
+          <button onclick="confirmDenuncia()" class="flex-1 py-2 bg-primary text-white rounded-lg text-body-sm font-semibold hover:opacity-90 transition-opacity">
+            <span class="material-symbols-outlined text-[16px] mr-1">send</span>Confirmar Denúncia
+          </button>
+        </div>
+      </div>
+      <div id="chat-input-area" class="p-md space-y-md border-t border-outline-variant bg-white rounded-b-2xl">
+        <div id="quick-chips" class="flex flex-wrap gap-xs"></div>
+        <div class="relative">
+          <input id="chat-input" class="w-full pl-4 pr-10 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm outline-none focus:border-primary" placeholder="Digite sua mensagem..." type="text" onkeydown="handleChatKey(event)">
+          <button onclick="sendChatMessage()" class="absolute right-2 top-1/2 -translate-y-1/2 text-primary"><span class="material-symbols-outlined">send</span></button>
+        </div>
+      </div>
+    </div>
+    <!-- Toggle button -->
+    <button onclick="toggleChatbot()" class="w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center pointer-events-auto hover:scale-105 transition-transform self-end">
+      <span class="material-symbols-outlined text-[28px]">smart_toy</span>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full py-lg px-xl flex flex-col md:flex-row justify-between items-center gap-md border-t border-outline-variant bg-surface-container-lowest">
+    <div class="flex items-center gap-md">
+      <span class="text-label-md font-black text-on-surface">Portal da Transparência · RS</span>
+      <span class="text-label-sm text-on-surface-variant">© 2024 - Governo do Estado do RS</span>
+    </div>
+    <div class="flex gap-lg">
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidade</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Termos de Uso</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Acessibilidade</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contato</a>
+    </div>
+  </footer>
+
+</div><!-- /page-dashboard -->
+
+
+<!-- PAGE: DETALHES DA EMPRESA -->
+<div class="page" id="page-company">
+
+  <header class="sticky top-0 z-50 flex justify-between items-center w-full px-lg py-sm bg-surface border-b border-outline-variant shadow-sm">
+    <span class="text-headline-md font-bold text-primary">Portal da Transparência · RS</span>
+  </header>
+
+  <div class="flex min-h-screen">
+
+    <aside class="hidden lg:flex flex-col h-screen p-md space-y-md fixed left-0 w-64 bg-surface-container-low border-r border-outline-variant shadow-md">
+      <div class="flex items-center gap-md px-sm py-md">
+        <span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
+        <div>
+          <h1 class="text-headline-sm font-bold text-on-surface leading-tight">Transparência</h1>
+          <p class="text-body-sm text-on-surface-variant">Dados Públicos RS</p>
+        </div>
+      </div>
+      <nav class="flex-1 space-y-sm">
+        <div class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95">
+          <span class="material-symbols-outlined">business</span>
+          <span class="text-label-md">Perfil da Empresa</span>
+        </div>
+        <button onclick="goToDashboard('tab-a')" class="w-full flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all text-left">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <span class="text-label-md">Contratos e Pagamentos</span>
+        </button>
+        <button onclick="goToDashboard('tab-c')" class="w-full flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all text-left">
+          <span class="material-symbols-outlined">badge</span>
+          <span class="text-label-md">Servidores Públicos</span>
+        </button>
+      </nav>
+    </aside>
+
+    <main class="flex-1 lg:ml-64 p-lg bg-surface">
+      <div class="max-w-container-max mx-auto space-y-lg">
+
+        <button onclick="goToDashboard('tab-b')" class="flex items-center gap-sm text-primary hover:underline text-body-sm font-semibold mb-md">
+          <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+          Voltar ao Dashboard
+        </button>
+
+        <!-- Header -->
+        <div class="glass-card p-xl rounded-xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-lg">
+          <div class="flex items-center gap-lg">
+            <div class="w-20 h-20 bg-primary-container rounded-xl flex items-center justify-center">
+              <span class="material-symbols-outlined text-5xl text-white">domain</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-md mb-xs flex-wrap">
+                <h1 id="company-name-heading" class="text-headline-lg text-primary">Empresa</h1>
+                <span id="company-status-badge" class="bg-primary-fixed text-on-primary-fixed-variant px-sm py-xs rounded-full text-label-sm">ATIVA</span>
+              </div>
+              <p id="company-cnpj-heading" class="text-body-md text-on-surface-variant">CNPJ: –</p>
+              <p id="company-category-heading" class="text-body-sm text-on-surface-variant mt-1">–</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-md">
+            <div id="company-stats" class="flex flex-wrap gap-md justify-end"></div>
+            <!-- Botão Denunciar Empresa na página de detalhes -->
+            <button id="btn-denunciar-empresa-detail" onclick="startDenunciaEmpresaDetail()" class="flex items-center gap-sm bg-orange-600 text-white px-md py-sm rounded-lg font-bold hover:bg-orange-700 transition-colors shadow-sm">
+              <span class="material-symbols-outlined text-[18px]">corporate_fare</span>
+              Denunciar esta Empresa
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+
+          <!-- Left Column -->
+          <div class="lg:col-span-4 space-y-lg">
+
+            <!-- Análise de Risco -->
+            <div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+              <h3 class="text-label-md text-outline uppercase mb-md">Análise de Risco &amp; Compliance</h3>
+              <div id="company-flags" class="space-y-md"></div>
+            </div>
+
+            <!-- QSA -->
+            <div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+              <h3 class="text-label-md text-outline uppercase mb-md">Quadro de Sócios (QSA)</h3>
+              <div id="company-qsa" class="space-y-lg"></div>
+            </div>
+
+          </div>
+
+          <!-- Right Column -->
+          <div class="lg:col-span-8 space-y-lg">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+              <div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+                <div class="flex items-center gap-sm mb-md text-primary">
+                  <span class="material-symbols-outlined">location_on</span>
+                  <h3 class="text-label-md uppercase">Endereço Fiscal</h3>
+                </div>
+                <p id="company-address" class="text-body-md text-on-surface">–</p>
+                <div class="mt-md w-full h-24 bg-surface-container rounded-lg flex items-center justify-center text-on-surface-variant text-body-sm">
+                  <span class="material-symbols-outlined mr-1">map</span>
+                  <span id="company-map-label">Rio Grande do Sul</span>
+                </div>
+              </div>
+              <div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-sm mb-md text-primary">
+                    <span class="material-symbols-outlined">groups</span>
+                    <h3 class="text-label-md uppercase">Recursos Humanos</h3>
+                  </div>
+                  <p id="company-employees" class="text-headline-lg text-on-surface">–</p>
+                  <p class="text-body-sm text-on-surface-variant">Funcionários registrados (eSocial)</p>
+                </div>
+                <div class="mt-lg">
+                  <div class="flex items-center gap-sm text-primary">
+                    <span class="material-symbols-outlined">category</span>
+                    <h3 class="text-label-md uppercase">CNAE Principal</h3>
+                  </div>
+                  <p id="company-cnae" class="text-body-sm text-on-surface">–</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Histórico de Contratos -->
+            <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+              <div class="p-lg border-b border-outline-variant flex justify-between items-center">
+                <div class="flex items-center gap-sm text-primary">
+                  <span class="material-symbols-outlined">history_edu</span>
+                  <h3 class="text-label-md uppercase">Histórico de Contratos Públicos</h3>
+                </div>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead class="bg-surface-container-low">
+                    <tr>
+                      <th class="px-lg py-md text-label-sm text-outline uppercase">Objeto</th>
+                      <th class="px-lg py-md text-label-sm text-outline uppercase">Órgão</th>
+                      <th class="px-lg py-md text-label-sm text-outline uppercase">Valor</th>
+                      <th class="px-lg py-md text-label-sm text-outline uppercase">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="company-contracts-table" class="divide-y divide-outline-variant"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <footer class="w-full py-lg px-xl flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest border-t border-outline-variant">
+    <div class="flex flex-col gap-xs">
+      <span class="text-label-md font-black text-on-surface uppercase">Portal da Transparência · RS</span>
+      <p class="text-body-sm text-on-surface-variant">© 2024 Portal da Transparência - Governo do Estado do RS.</p>
+    </div>
+    <div class="flex gap-lg">
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidade</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Termos de Uso</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Acessibilidade</a>
+      <a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contato</a>
+    </div>
+  </footer>
+
+  <div class="fixed bottom-lg right-lg z-50">
+    <button onclick="toggleChatbot()" class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform" title="Assistente">
+      <span class="material-symbols-outlined text-2xl">support_agent</span>
+    </button>
+  </div>
+
+</div><!-- /page-company -->
+
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const contracts = [
+  {
+    id: 1,
+    title: "Locação de Veículos",
+    organ: "FEPAM – Fundação Estadual de Proteção Ambiental",
+    company: "CS Brasil Frotas S.A.",
+    cnpj: "27.595.780/0001-16",
+    value: "R$ 80.367,70",
+    valueNum: 80367.70,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Locação de Veículos",
+    year: "2024",
+    start: "12/02/2024",
+    modality: "Pregão Eletrônico",
+    status: "EM EXECUÇÃO",
+    statusColor: "green",
+    priceAlert: "+32% acima",
+    priceUp: true,
+    flags: ["grande-fornecedor"],
+    process: "0012240020011870"
+  },
+  {
+    id: 2,
+    title: "Locação de Veículos",
+    organ: "IRGA – Instituto Rio-grandense do Arroz",
+    company: "CS Brasil Frotas S.A.",
+    cnpj: "27.595.780/0001-16",
+    value: "R$ 39.273,59",
+    valueNum: 39273.59,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Locação de Veículos",
+    year: "2024",
+    start: "18/03/2024",
+    modality: "Pregão Eletrônico",
+    status: "EM EXECUÇÃO",
+    statusColor: "green",
+    priceAlert: "+28% acima",
+    priceUp: true,
+    flags: ["grande-fornecedor"],
+    process: "0012240030021450"
+  },
+  {
+    id: 3,
+    title: "Locação de Veículos",
+    organ: "Secretaria de Habitação e Regularização Fundiária",
+    company: "Locadora de Veículos Santa Cruz Ltda",
+    cnpj: "03.000.720/0001-45",
+    value: "R$ 7.874,49",
+    valueNum: 7874.49,
+    city: "Santa Cruz do Sul",
+    sphere: "Estadual",
+    category: "Locação de Veículos",
+    year: "2023",
+    start: "05/07/2023",
+    modality: "Pregão Eletrônico",
+    status: "CONCLUÍDO",
+    statusColor: "blue",
+    priceAlert: "Dentro da mediana",
+    priceUp: false,
+    flags: [],
+    process: "0023230070045120"
+  },
+  {
+    id: 4,
+    title: "Locação de Veículos",
+    organ: "Ministério Público do Estado do RS",
+    company: "Investcar Veículos Ltda",
+    cnpj: "01.615.224/0001-70",
+    value: "R$ 195,36",
+    valueNum: 195.36,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Locação de Veículos",
+    year: "2023",
+    start: "10/09/2023",
+    modality: "Dispensa",
+    status: "CONCLUÍDO",
+    statusColor: "blue",
+    priceAlert: "-12% abaixo",
+    priceUp: false,
+    flags: ["pequeno-valor"],
+    process: "0023230090067330"
+  },
+  {
+    id: 5,
+    title: "Uniforme Escolar Para Alunos da Rede Estadual",
+    organ: "Secretaria da Educação",
+    company: "NKS Impos e Expos Ind e Com de Calc Ltda",
+    cnpj: "00.744.999/0001-83",
+    value: "R$ 35.723,64",
+    valueNum: 35723.64,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Educação",
+    year: "2024",
+    start: "20/01/2024",
+    modality: "Pregão Eletrônico",
+    status: "EM EXECUÇÃO",
+    statusColor: "green",
+    priceAlert: "+5% acima",
+    priceUp: true,
+    flags: [],
+    process: "0012240010009880"
+  },
+  {
+    id: 6,
+    title: "Uniforme Escolar Para Alunos da Rede Estadual",
+    organ: "Secretaria da Educação",
+    company: "Brink Mobil Equip Educacionais Ltda",
+    cnpj: "79.788.766/0030-77",
+    value: "R$ 42.702,69",
+    valueNum: 42702.69,
+    city: "Caxias do Sul",
+    sphere: "Estadual",
+    category: "Educação",
+    year: "2024",
+    start: "20/01/2024",
+    modality: "Pregão Eletrônico",
+    status: "EM EXECUÇÃO",
+    statusColor: "green",
+    priceAlert: "+18% acima",
+    priceUp: true,
+    flags: ["sobrepreco"],
+    process: "0012240010009881"
+  },
+  {
+    id: 7,
+    title: "Uniforme Escolar Para Alunos da Rede Estadual",
+    organ: "Secretaria da Educação",
+    company: "D Brasil Distrib e Ind Têxtil Ltda",
+    cnpj: "00.676.679/0007-29",
+    value: "R$ 4.479,90",
+    valueNum: 4479.90,
+    city: "Novo Hamburgo",
+    sphere: "Estadual",
+    category: "Educação",
+    year: "2023",
+    start: "15/08/2023",
+    modality: "Pregão Eletrônico",
+    status: "CONCLUÍDO",
+    statusColor: "blue",
+    priceAlert: "Dentro da mediana",
+    priceUp: false,
+    flags: [],
+    process: "0023230080033210"
+  },
+  {
+    id: 8,
+    title: "Vigilância e Zeladoria",
+    organ: "Defensoria Pública do Estado",
+    company: "M D Serviços de Segurança Ltda",
+    cnpj: "94.308.798/0001-87",
+    value: "R$ 10.541,79",
+    valueNum: 10541.79,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Segurança",
+    year: "2024",
+    start: "08/04/2024",
+    modality: "Pregão Eletrônico",
+    status: "EM EXECUÇÃO",
+    statusColor: "green",
+    priceAlert: "Dentro da mediana",
+    priceUp: false,
+    flags: [],
+    process: "0012240040031750"
+  },
+  {
+    id: 9,
+    title: "Serviços de Vigilância Eletrônica",
+    organ: "Secretaria de Obras Públicas",
+    company: "Security Vigilância Eletrônica Ltda",
+    cnpj: "23.051.149/0001-03",
+    value: "R$ 800,25 + R$ 795,15 + R$ 778,52",
+    valueNum: 2373.92,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Segurança",
+    year: "2024",
+    start: "22/05/2024",
+    modality: "Pregão Eletrônico",
+    status: "SUSPEITO",
+    statusColor: "red",
+    priceAlert: "Pagamentos repetitivos",
+    priceUp: true,
+    flags: ["pagamentos-identicos", "mesmo-processo"],
+    process: "0026220090003763",
+    extraNote: "3 pagamentos distintos no mesmo processo e data"
+  },
+  {
+    id: 10,
+    title: "Sistemas de Proteção Contra Cheias – SPCC Eldorado do Sul",
+    organ: "Secretaria de Desenvolvimento Urbano e Metropolitano",
+    company: "Consórcio HD Att Eldorado",
+    cnpj: "61.974.062/0001-99",
+    value: "R$ 606.931,61 + R$ 312.410,98",
+    valueNum: 919342.59,
+    city: "Eldorado do Sul",
+    sphere: "Estadual",
+    category: "Infraestrutura",
+    year: "2024",
+    start: "03/06/2024",
+    modality: "Contratação Direta",
+    status: "EM EXECUÇÃO",
+    statusColor: "amber",
+    priceAlert: "+41% acima",
+    priceUp: true,
+    flags: ["alto-valor", "sobrepreco", "consorcio"],
+    process: "0012240060051200"
+  },
+  {
+    id: 11,
+    title: "Atendimentos Emergenciais na Rede Física – Conservação de Bens Imóveis",
+    organ: "Secretaria da Educação",
+    company: "Sulcredi Const Ltda",
+    cnpj: "11.279.904/0001-14",
+    value: "R$ 252.282,87",
+    valueNum: 252282.87,
+    city: "Pelotas",
+    sphere: "Estadual",
+    category: "Educação",
+    year: "2023",
+    start: "14/11/2023",
+    modality: "Emergencial",
+    status: "EM EXECUÇÃO",
+    statusColor: "amber",
+    priceAlert: "+27% acima",
+    priceUp: true,
+    flags: ["contratacao-emergencial", "sobrepreco"],
+    process: "0023231100088450"
+  },
+  {
+    id: 12,
+    title: "Diárias Civis – Mesma Data",
+    organ: "Secretaria da Agricultura",
+    company: "Luiz Valdeci Vargas Rodrigues",
+    cnpj: "***.626.240-**",
+    value: "R$ 1.105,56 + R$ 502,53",
+    valueNum: 1608.09,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Diárias",
+    year: "2024",
+    start: "15/03/2024",
+    modality: "Diária Civil",
+    status: "SUSPEITO",
+    statusColor: "red",
+    priceAlert: "Duplicidade detectada",
+    priceUp: true,
+    flags: ["diaria-dupla"],
+    process: "0012240030025690"
+  },
+  {
+    id: 13,
+    title: "Elaboração de Projetos",
+    organ: "Secretaria da Educação",
+    company: "Nathalie de Oliveira Lunardi",
+    cnpj: "47.725.716/0001-10",
+    value: "R$ 11.379,02",
+    valueNum: 11379.02,
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    category: "Serviços",
+    year: "2024",
+    start: "10/04/2024",
+    modality: "Inexigibilidade de Licitação",
+    status: "CONCLUÍDO",
+    statusColor: "blue",
+    priceAlert: "Sem concorrência",
+    priceUp: false,
+    flags: ["inexigibilidade"],
+    process: "0012240040033410"
+  }
+];
+
+const companies = [
+  {
+    name: "CS Brasil Frotas S.A.",
+    cnpj: "27.595.780/0001-16",
+    cnae: "77.11-0-00 – Locação de automóveis",
+    capital: "R$ 12.000.000,00",
+    employees: "284",
+    age: "9 anos",
+    address: "Av. Borges de Medeiros, 900 – Porto Alegre, RS",
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    flagsCompany: ["Concentração de contratos em 2 órgãos", "Sócio com participação em 4 outras empresas do setor"],
+    flagsSocios: ["Vínculo comercial com ex-gestor estadual"],
+    flagBadges: [
+      { label: "Concentração de Contratos", color: "orange" },
+      { label: "Vínculo Empresarial", color: "red" }
+    ],
+    socios: [
+      { name: "Carlos Eduardo Frota Júnior", role: "Sócio-Administrador", risk: true },
+      { name: "Fernanda Oliveira Matos", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 119.641,29",
+    contracts: [
+      { obj: "Locação de Veículos", organ: "FEPAM", value: "R$ 80.367,70", status: "EM EXECUÇÃO" },
+      { obj: "Locação de Veículos", organ: "IRGA", value: "R$ 39.273,59", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "Security Vigilância Eletrônica Ltda",
+    cnpj: "23.051.149/0001-03",
+    cnae: "80.20-0-00 – Atividades de monitoramento de sistemas de segurança",
+    capital: "R$ 800.000,00",
+    employees: "47",
+    age: "6 anos",
+    address: "Rua Siqueira Campos, 1200 – Porto Alegre, RS",
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    flagsCompany: ["3 pagamentos idênticos no mesmo processo e data", "Capital social incompatível com volume contratado"],
+    flagsSocios: [],
+    flagBadges: [
+      { label: "Pagamentos Repetitivos", color: "red" },
+      { label: "Fracionamento Suspeito", color: "red" }
+    ],
+    socios: [
+      { name: "Roberto Machado Silveira", role: "Sócio-Administrador", risk: true },
+      { name: "Patrícia Lima Cardoso", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 2.373,92",
+    contracts: [
+      { obj: "Vigilância Eletrônica – Pagamento 1", organ: "Sec. Obras Públicas", value: "R$ 800,25", status: "SUSPEITO" },
+      { obj: "Vigilância Eletrônica – Pagamento 2", organ: "Sec. Obras Públicas", value: "R$ 795,15", status: "SUSPEITO" },
+      { obj: "Vigilância Eletrônica – Pagamento 3", organ: "Sec. Obras Públicas", value: "R$ 778,52", status: "SUSPEITO" }
+    ]
+  },
+  {
+    name: "Consórcio HD Att Eldorado",
+    cnpj: "61.974.062/0001-99",
+    cnae: "42.99-5-99 – Outras obras de engenharia civil",
+    capital: "R$ 50.000.000,00",
+    employees: "320",
+    age: "2 anos",
+    address: "Rua dos Andradas, 500 – Porto Alegre, RS",
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    flagsCompany: ["Consórcio criado há apenas 2 anos", "Contratação direta sem licitação para obra de grande porte"],
+    flagsSocios: ["Sócio com PEP – Pessoa Exposta Politicamente", "Empresa-mãe com pendência judicial ativa"],
+    flagBadges: [
+      { label: "Contratação Direta", color: "red" },
+      { label: "PEP: Sócio", color: "orange" },
+      { label: "Empresa Nova", color: "amber" }
+    ],
+    socios: [
+      { name: "Marcos Henrique Dallazem", role: "Representante Legal", risk: true },
+      { name: "Eldorado Engenharia S.A.", role: "Empresa Consorciada", risk: true }
+    ],
+    totalPago: "R$ 919.342,59",
+    contracts: [
+      { obj: "SPCC Eldorado – Parcela 1", organ: "Sec. Desenvolvimento Urbano", value: "R$ 606.931,61", status: "EM EXECUÇÃO" },
+      { obj: "SPCC Eldorado – Parcela 2", organ: "Sec. Desenvolvimento Urbano", value: "R$ 312.410,98", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "Sulcredi Const Ltda",
+    cnpj: "11.279.904/0001-14",
+    cnae: "41.20-4-00 – Construção de edifícios",
+    capital: "R$ 2.500.000,00",
+    employees: "85",
+    age: "11 anos",
+    address: "Rua Benjamin Constant, 340 – Pelotas, RS",
+    city: "Pelotas",
+    sphere: "Estadual",
+    flagsCompany: ["Contratação emergencial com sobrepreço de 27%", "Histórico de obras não concluídas em prazo"],
+    flagsSocios: [],
+    flagBadges: [
+      { label: "Contratação Emergencial", color: "orange" },
+      { label: "Sobrepreço +27%", color: "red" }
+    ],
+    socios: [
+      { name: "Adriano Sulzbach Credidio", role: "Sócio-Administrador", risk: false },
+      { name: "Renata Cunha Fonseca", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 252.282,87",
+    contracts: [
+      { obj: "Conservação de Bens Imóveis – Emergencial", organ: "Sec. da Educação", value: "R$ 252.282,87", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "Brink Mobil Equip Educacionais Ltda",
+    cnpj: "79.788.766/0030-77",
+    cnae: "47.59-8-99 – Comércio varejista de outros artigos de uso pessoal e doméstico",
+    capital: "R$ 1.200.000,00",
+    employees: "62",
+    age: "18 anos",
+    address: "Rua Amadeu Rossi, 780 – Caxias do Sul, RS",
+    city: "Caxias do Sul",
+    sphere: "Estadual",
+    flagsCompany: ["Preço 18% acima da mediana de mercado para uniformes"],
+    flagsSocios: [],
+    flagBadges: [
+      { label: "Sobrepreço +18%", color: "orange" }
+    ],
+    socios: [
+      { name: "Vânio Brink Müller", role: "Sócio-Administrador", risk: false },
+      { name: "Sônia Paula Zanella", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 42.702,69",
+    contracts: [
+      { obj: "Uniforme Escolar – Rede Estadual", organ: "Sec. da Educação", value: "R$ 42.702,69", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "NKS Impos e Expos Ind e Com de Calc Ltda",
+    cnpj: "00.744.999/0001-83",
+    cnae: "14.12-6-01 – Confecção de peças do vestuário",
+    capital: "R$ 3.000.000,00",
+    employees: "130",
+    age: "22 anos",
+    address: "Av. Unisinos, 950 – São Leopoldo, RS",
+    city: "São Leopoldo",
+    sphere: "Estadual",
+    flagsCompany: [],
+    flagsSocios: [],
+    flagBadges: [],
+    socios: [
+      { name: "Neusa Karpinski Strauss", role: "Sócio-Administrador", risk: false },
+      { name: "Sérgio Karpinski Filho", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 35.723,64",
+    contracts: [
+      { obj: "Uniforme Escolar – Rede Estadual", organ: "Sec. da Educação", value: "R$ 35.723,64", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "M D Serviços de Segurança Ltda",
+    cnpj: "94.308.798/0001-87",
+    cnae: "80.11-1-01 – Atividades de vigilância e segurança privada",
+    capital: "R$ 600.000,00",
+    employees: "98",
+    age: "14 anos",
+    address: "Av. Cristóvão Colombo, 1400 – Porto Alegre, RS",
+    city: "Porto Alegre",
+    sphere: "Estadual",
+    flagsCompany: [],
+    flagsSocios: [],
+    flagBadges: [],
+    socios: [
+      { name: "Marcelo Dias Nogueira", role: "Sócio-Administrador", risk: false },
+      { name: "Daniela Rodrigues Pires", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 10.541,79",
+    contracts: [
+      { obj: "Vigilância e Zeladoria", organ: "Defensoria Pública do Estado", value: "R$ 10.541,79", status: "EM EXECUÇÃO" }
+    ]
+  },
+  {
+    name: "Locadora de Veículos Santa Cruz Ltda",
+    cnpj: "03.000.720/0001-45",
+    cnae: "77.11-0-00 – Locação de automóveis",
+    capital: "R$ 900.000,00",
+    employees: "32",
+    age: "16 anos",
+    address: "Rua Ramiro Barcelos, 200 – Santa Cruz do Sul, RS",
+    city: "Santa Cruz do Sul",
+    sphere: "Estadual",
+    flagsCompany: [],
+    flagsSocios: [],
+    flagBadges: [],
+    socios: [
+      { name: "João Batista Krause", role: "Sócio-Administrador", risk: false },
+      { name: "Lúcia Andrade Krause", role: "Sócio Cotista", risk: false }
+    ],
+    totalPago: "R$ 7.874,49",
+    contracts: [
+      { obj: "Locação de Veículos", organ: "Sec. de Habitação e Reg. Fundiária", value: "R$ 7.874,49", status: "CONCLUÍDO" }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════
+   FLAG RENDERING
+═══════════════════════════════════════════ */
+const flagDefs = {
+  "grande-fornecedor": { label: "Grande Fornecedor", color: "blue", icon: "business_center" },
+  "pequeno-valor": { label: "Valor Irrisório", color: "gray", icon: "money_off" },
+  "sobrepreco": { label: "Sobrepreço Detectado", color: "orange", icon: "price_change" },
+  "alto-valor": { label: "Alto Valor", color: "red", icon: "attach_money" },
+  "consorcio": { label: "Consórcio", color: "purple", icon: "group_work" },
+  "contratacao-emergencial": { label: "Contratação Emergencial", color: "orange", icon: "emergency" },
+  "pagamentos-identicos": { label: "Pagamentos Repetitivos", color: "red", icon: "repeat" },
+  "mesmo-processo": { label: "Mesmo Nº de Processo", color: "red", icon: "link" },
+  "diaria-dupla": { label: "Diária Dupla", color: "amber", icon: "warning" },
+  "inexigibilidade": { label: "Inexigibilidade de Licitação", color: "orange", icon: "gavel" }
+};
+
+const flagColorMap = {
+  "blue":   "bg-blue-100 text-blue-800 border-blue-200",
+  "gray":   "bg-gray-100 text-gray-700 border-gray-200",
+  "orange": "bg-orange-100 text-orange-800 border-orange-200",
+  "red":    "bg-red-100 text-red-800 border-red-200",
+  "purple": "bg-purple-100 text-purple-800 border-purple-200",
+  "amber":  "bg-amber-100 text-amber-800 border-amber-200"
+};
+
+const statusColorMap = {
+  "green": "bg-green-100 text-green-700 border-green-200",
+  "blue": "bg-blue-100 text-blue-700 border-blue-200",
+  "amber": "bg-amber-100 text-amber-700 border-amber-200",
+  "red": "bg-red-100 text-red-700 border-red-200"
+};
+
+function renderFlagBadges(flags) {
+  if (!flags || flags.length === 0) return '';
+  return flags.map(f => {
+    const def = flagDefs[f];
+    if (!def) return '';
+    const cls = flagColorMap[def.color] || flagColorMap["gray"];
+    return `<span class="inline-flex items-center gap-1 ${cls} px-2 py-1 rounded text-[10px] font-bold border">
+      <span class="material-symbols-outlined text-[13px]">${def.icon}</span>${def.label}
+    </span>`;
+  }).join('');
+}
+
+function renderContractCard(c) {
+  const statusCls = statusColorMap[c.statusColor] || statusColorMap["blue"];
+  const flagsHtml = renderFlagBadges(c.flags);
+  const priceIconCls = c.priceUp ? 'text-error' : 'text-green-600';
+  const priceIcon = c.priceUp ? 'trending_up' : (c.priceAlert.includes('mediana') ? 'trending_flat' : 'trending_down');
+  const extraNote = c.extraNote ? `<div class="mt-sm p-sm bg-red-50 border border-red-200 rounded text-[11px] text-red-700 font-medium"><span class="material-symbols-outlined text-[13px] mr-1">info</span>${c.extraNote}</div>` : '';
+
+  return `<div class="bg-white p-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow contract-card"
+    data-city="${c.city}" data-sphere="${c.sphere}" data-category="${c.category}" data-year="${c.year}"
+    data-searchable="${c.title} ${c.organ} ${c.company} ${c.cnpj}">
+    <div class="flex justify-between items-start mb-md gap-sm">
+      <div class="flex-1 min-w-0">
+        <p class="text-label-sm text-outline uppercase tracking-wider truncate">${c.organ}</p>
+        <h3 class="text-body-lg font-semibold mt-1 leading-snug">${c.title}</h3>
+      </div>
+      <span class="${statusCls} text-[10px] font-bold px-2 py-1 rounded border whitespace-nowrap">${c.status}</span>
+    </div>
+    ${flagsHtml ? `<div class="flex flex-wrap gap-xs mb-md">${flagsHtml}</div>` : ''}
+    <div class="space-y-xs mb-md">
+      <div class="flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-outline">business</span>
+        <span class="company-link text-body-sm" onclick="navigateToCompany('${c.company}', '${c.cnpj}')">${c.company}</span>
+      </div>
+      <div class="flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-outline">badge</span>
+        <span class="text-body-sm text-on-surface-variant">CNPJ: ${c.cnpj}</span>
+      </div>
+      <div class="flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-outline">location_on</span>
+        <span class="text-body-sm text-on-surface-variant">${c.city} – RS</span>
+      </div>
+      <div class="flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-outline">folder_open</span>
+        <span class="text-body-sm text-on-surface-variant">Processo: ${c.process}</span>
+      </div>
+    </div>
+    <div class="flex items-center justify-between p-sm bg-surface-container-low rounded-lg mb-md">
+      <div><p class="text-[10px] text-outline uppercase">Valor Total</p><p class="text-body-md font-bold">${c.value}</p></div>
+      <div class="text-right"><p class="text-[10px] text-outline uppercase">vs. Mediana</p>
+        <div class="flex items-center gap-xs justify-end"><span class="material-symbols-outlined text-[16px] ${priceIconCls}">${priceIcon}</span><span class="text-body-sm font-bold ${priceIconCls}">${c.priceAlert}</span></div>
+      </div>
+    </div>
+    <div class="flex gap-md mb-md">
+      <div class="flex-1"><p class="text-[10px] text-outline uppercase">Início</p><p class="text-body-sm">${c.start}</p></div>
+      <div class="flex-1"><p class="text-[10px] text-outline uppercase">Modalidade</p><p class="text-body-sm">${c.modality}</p></div>
+    </div>
+    ${extraNote}
+    <button onclick="startDenuncia('contrato', '${c.title}', '${c.cnpj}', '${c.organ}', '${c.process}', '${c.city}', '${c.sphere}')" class="w-full flex items-center justify-center gap-sm bg-surface-container-highest text-error text-label-md py-2 rounded-lg hover:bg-error hover:text-white transition-colors mt-sm">
+      <span class="material-symbols-outlined text-[18px]">report</span> 🚨 Denunciar Irregularidade
+    </button>
+  </div>`;
+}
+
+function renderCompanyListCard(co) {
+  const badgesHtml = co.flagBadges.map(b => {
+    const cls = b.color === 'red' ? 'bg-red-100 text-red-800 border-red-200'
+              : b.color === 'orange' ? 'bg-orange-100 text-orange-800 border-orange-200'
+              : b.color === 'amber' ? 'bg-amber-100 text-amber-800 border-amber-200'
+              : 'bg-gray-100 text-gray-700 border-gray-200';
+    return `<span class="${cls} px-3 py-1 rounded-full text-label-sm font-bold border">${b.label}</span>`;
+  }).join('');
+
+  return `<div class="block w-full text-left bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all group">
+    <div class="p-lg bg-surface-container-low flex justify-between items-center flex-wrap gap-md group-hover:bg-primary/5 transition-colors cursor-pointer" onclick="navigateToCompany('${co.name}', '${co.cnpj}')">
+      <div class="flex items-center gap-lg">
+        <div class="w-14 h-14 bg-white border border-outline-variant rounded-xl flex items-center justify-center">
+          <span class="material-symbols-outlined text-[28px] text-primary">corporate_fare</span>
+        </div>
+        <div>
+          <h2 class="text-headline-sm group-hover:text-primary transition-colors">${co.name}</h2>
+          <p class="text-body-sm text-on-surface-variant">CNPJ: ${co.cnpj} · ${co.city}, RS</p>
+          <p class="text-label-sm text-outline mt-1">Total recebido: <span class="font-bold text-on-surface">${co.totalPago}</span></p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-sm items-center">
+        ${badgesHtml || '<span class="bg-green-100 text-green-800 border-green-200 px-3 py-1 rounded-full text-label-sm font-bold border">Sem Flags</span>'}
+      </div>
+    </div>
+    <div class="p-lg grid grid-cols-1 md:grid-cols-3 gap-lg">
+      <div class="space-y-md">
+        <div><p class="text-label-sm text-outline uppercase">CNAE Principal</p><p class="text-body-md">${co.cnae}</p></div>
+        <div><p class="text-label-sm text-outline uppercase">Capital Social</p><p class="text-body-md font-bold">${co.capital}</p></div>
+      </div>
+      <div class="md:col-span-2">
+        <p class="text-label-sm text-outline uppercase mb-md">Quadro de Sócios</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+          ${co.socios.map(s => `
+          <div class="p-md bg-surface-container-lowest rounded-lg border border-outline-variant flex justify-between items-center">
+            <div><p class="font-bold text-body-sm">${s.name}</p><p class="text-label-sm text-on-surface-variant">${s.role}</p></div>
+            <span class="material-symbols-outlined ${s.risk ? 'text-error' : 'text-green-600'}">${s.risk ? 'flag' : 'check_circle'}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="px-lg pb-lg">
+      <button onclick="startDenuncia('empresa', '${co.name}', '${co.cnpj}', '', '', '${co.city}', '${co.sphere}', '${co.cnae}')" class="w-full flex items-center justify-center gap-sm bg-orange-50 border border-orange-300 text-orange-700 font-bold text-label-md py-2 rounded-lg hover:bg-orange-600 hover:text-white hover:border-orange-600 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">corporate_fare</span>
+        Denunciar esta Empresa ao TCE-RS
+      </button>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+function initContracts() {
+  const grid = document.getElementById('contracts-grid');
+  grid.innerHTML = contracts.map(renderContractCard).join('');
+}
+
+function initCompanies() {
+  const list = document.getElementById('companies-list');
+  list.innerHTML = companies.map(renderCompanyListCard).join('');
+}
+
+/* ═══════════════════════════════════════════
+   FILTERS
+═══════════════════════════════════════════ */
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const city = document.getElementById('filter-city').value;
+  const sphere = document.getElementById('filter-sphere').value;
+  const category = document.getElementById('filter-category').value;
+  const year = document.getElementById('filter-year').value;
+
+  const cards = document.querySelectorAll('.contract-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cardCity = card.dataset.city || '';
+    const cardSphere = card.dataset.sphere || '';
+    const cardCategory = card.dataset.category || '';
+    const cardYear = card.dataset.year || '';
+    const cardSearch = card.dataset.searchable || '';
+
+    const matchSearch = !search || cardSearch.toLowerCase().includes(search);
+    const matchCity = !city || cardCity === city;
+    const matchSphere = !sphere || cardSphere === sphere;
+    const matchCategory = !category || cardCategory === category;
+    const matchYear = !year || cardYear === year;
+
+    if (matchSearch && matchCity && matchSphere && matchCategory && matchYear) {
+      card.style.display = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  document.getElementById('contracts-count').textContent = `Total: ${visible} registros`;
+  document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+}
+
+document.getElementById('search-input').addEventListener('input', applyFilters);
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let currentCompanyName = '';
+let currentCompanyCnpj = '';
+
+function navigateToCompany(name, cnpj) {
+  const co = companies.find(c => c.cnpj === cnpj || c.name === name);
+
+  currentCompanyName = name;
+  currentCompanyCnpj = cnpj;
+
+  document.getElementById('company-name-heading').textContent = name;
+  document.getElementById('company-cnpj-heading').textContent = 'CNPJ: ' + cnpj;
+
+  if (co) {
+    document.getElementById('company-category-heading').textContent = co.cnae;
+    document.getElementById('company-address').innerHTML = co.address.replace('–', '<br>');
+    document.getElementById('company-map-label').textContent = co.city + ' – RS';
+    document.getElementById('company-employees').textContent = co.employees;
+    document.getElementById('company-cnae').textContent = co.cnae;
+
+    document.getElementById('company-stats').innerHTML = `
+      <div class="bg-surface-container-low p-md rounded-lg border border-outline-variant min-w-[120px]">
+        <span class="text-label-sm text-outline block">Idade da Empresa</span>
+        <span class="text-headline-sm text-on-surface">${co.age}</span>
+      </div>
+      <div class="bg-surface-container-low p-md rounded-lg border border-outline-variant min-w-[160px]">
+        <span class="text-label-sm text-outline block">Capital Declarado</span>
+        <span class="text-headline-sm text-on-surface">${co.capital}</span>
+      </div>
+      <div class="bg-surface-container-low p-md rounded-lg border border-outline-variant min-w-[140px]">
+        <span class="text-label-sm text-outline block">Total Recebido</span>
+        <span class="text-headline-sm text-primary font-bold">${co.totalPago}</span>
+      </div>`;
+
+    let flagsHtml = '';
+    if (co.flagsCompany.length) {
+      flagsHtml += co.flagsCompany.map(f => `
+        <div class="p-md bg-red-50 border border-red-200 rounded-lg flex gap-md">
+          <span class="material-symbols-outlined text-error">warning</span>
+          <div><p class="text-label-md font-semibold text-error">Flag da Empresa</p><p class="text-body-sm text-on-surface-variant">${f}</p></div>
+        </div>`).join('');
+    }
+    if (co.flagsSocios.length) {
+      flagsHtml += co.flagsSocios.map(f => `
+        <div class="p-md bg-orange-50 border border-orange-200 rounded-lg flex gap-md">
+          <span class="material-symbols-outlined text-orange-600">person_alert</span>
+          <div><p class="text-label-md font-semibold text-orange-700">Flag dos Sócios</p><p class="text-body-sm text-on-surface-variant">${f}</p></div>
+        </div>`).join('');
+    }
+    if (!flagsHtml) {
+      flagsHtml = `<div class="p-md bg-green-50 border border-green-200 rounded-lg flex gap-md">
+        <span class="material-symbols-outlined text-green-600">verified</span>
+        <div><p class="text-label-md font-semibold text-green-700">Sem Irregularidades</p><p class="text-body-sm text-on-surface-variant">Nenhuma flag detectada para esta empresa.</p></div>
+      </div>`;
+    }
+    document.getElementById('company-flags').innerHTML = flagsHtml;
+
+    document.getElementById('company-qsa').innerHTML = co.socios.map(s => `
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-md">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-secondary-container">person</span>
+          </div>
+          <div>
+            <p class="text-body-md font-bold text-on-surface">${s.name}</p>
+            <p class="text-label-sm text-outline">${s.role}</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined ${s.risk ? 'text-error' : 'text-outline-variant'}">${s.risk ? 'flag' : 'check_circle'}</span>
+      </div>`).join('');
+
+    document.getElementById('company-contracts-table').innerHTML = co.contracts.map(ct => {
+      const statusCls = ct.status === 'CONCLUÍDO' ? 'bg-primary/10 text-primary' :
+                        ct.status === 'SUSPEITO' ? 'bg-red-100 text-red-700' :
+                        'bg-secondary-container/30 text-secondary';
+      return `<tr class="hover:bg-primary/5 transition-colors cursor-pointer">
+        <td class="px-lg py-md"><p class="text-body-sm font-bold text-on-surface">${ct.obj}</p></td>
+        <td class="px-lg py-md text-body-sm">${ct.organ}</td>
+        <td class="px-lg py-md text-body-sm font-bold">${ct.value}</td>
+        <td class="px-lg py-md"><span class="${statusCls} px-sm py-xs rounded-full text-label-sm font-bold">${ct.status}</span></td>
+      </tr>`;
+    }).join('');
+  }
+
+  showPage('page-company');
+}
+
+function goToDashboard(tabId) {
+  showPage('page-dashboard');
+  switchTab(tabId);
+}
+
+/* ═══════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════ */
+function switchTab(tabId) {
+  document.querySelectorAll('#page-dashboard .tab-content').forEach(tab => tab.classList.add('hidden'));
+  document.getElementById(tabId).classList.remove('hidden');
+
+  ['btn-tab-a', 'btn-tab-b', 'btn-tab-c'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-bold', 'scale-95');
+    btn.classList.add('text-on-surface-variant');
+  });
+
+  const active = document.getElementById('btn-' + tabId);
+  if (active) {
+    active.classList.remove('text-on-surface-variant');
+    active.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold', 'scale-95');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CHATBOT TOGGLE
+═══════════════════════════════════════════ */
+let chatOpen = false;
+function toggleChatbot() {
+  const panel = document.getElementById('chatbot-panel');
+  chatOpen = !chatOpen;
+  if (chatOpen) {
+    panel.classList.remove('hidden-bot');
+  } else {
+    panel.classList.add('hidden-bot');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CHATBOT STATE MACHINE
+═══════════════════════════════════════════ */
+let denunciaState = {
+  mode: 'idle',
+  step: 0,
+  orgao: '',
+  subject: '',
+  cnpj: '',
+  organ: '',
+  process: '',
+  city: '',
+  sphere: '',
+  cnae: '',
+  anonimo: null,
+  cpf: '',
+  descricao: '',
+  arquivos: [],
+};
+
+let attachedFiles = [];
+
+function resetDenuncia() {
+  denunciaState = {
+    mode: 'idle', step: 0, orgao: '', subject: '', cnpj: '',
+    organ: '', process: '', city: '', sphere: '', cnae: '',
+    anonimo: null, cpf: '', descricao: '', arquivos: []
+  };
+  attachedFiles = [];
+  document.getElementById('file-list').innerHTML = '';
+}
+
+function openChatbotClean(subtitle) {
+  const panel = document.getElementById('chatbot-panel');
+  chatOpen = true;
+  panel.classList.remove('hidden-bot');
+  document.getElementById('chat-messages').innerHTML = '';
+  hideFileArea();
+  hideConfirmArea();
+  showInputArea();
+  setQuickChips([]);
+  document.getElementById('chatbot-subtitle').textContent = subtitle;
+  denunciaState.step = 0;
+}
+
+function startDenunciaEmpresaDetail() {
+  const co = companies.find(c => c.cnpj === currentCompanyCnpj || c.name === currentCompanyName);
+  startDenuncia('empresa', currentCompanyName, currentCompanyCnpj, '', '', co ? co.city : '', co ? co.sphere || 'Estadual' : 'Estadual', co ? co.cnae : '');
+}
+
+function startDenuncia(type, subject, cnpj, organ, process, city, sphere, cnae) {
+  resetDenuncia();
+  denunciaState.mode = type;
+  denunciaState.subject = subject || '';
+  denunciaState.cnpj = cnpj || '';
+  denunciaState.organ = organ || '';
+  denunciaState.process = process || '';
+  denunciaState.city = city || '';
+  denunciaState.sphere = sphere || '';
+  denunciaState.cnae = cnae || '';
+
+  if (type === 'contrato') {
+    denunciaState.orgao = 'Ministério Público do Estado do RS';
+    openChatbotClean('⚠️ Denúncia – Ministério Público · MPRS');
+    setTimeout(() => showDenunciaContratoFlow(), 300);
+  } else {
+    denunciaState.orgao = 'Tribunal de Contas do Estado do RS (TCE-RS)';
+    openChatbotClean('⚠️ Denúncia – Tribunal de Contas · TCE-RS');
+    setTimeout(() => showDenunciaEmpresaFlow(), 300);
+  }
+}
+
+/* ═══════════════════════════════════
+   TCE-RS FLOW (empresas)
+═══════════════════════════════════ */
+function showDenunciaEmpresaFlow() {
+  // Step 1: show company data and ask user to describe the problem
+  const d = denunciaState;
+
+  const infoCard = `
+    <div class="bg-surface-container rounded-lg p-md border border-outline-variant text-body-sm space-y-xs mt-sm">
+      <p class="font-bold text-on-surface text-[12px] mb-sm flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-primary">corporate_fare</span>
+        Dados da empresa identificada
+      </p>
+      <div class="divide-y divide-outline-variant">
+        ${d.sphere ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Esfera</span>
+          <span class="font-semibold text-[12px]">${d.sphere}</span>
+        </div>` : ''}
+        <div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Nome da Empresa</span>
+          <span class="font-semibold text-[12px] text-right max-w-[60%]">${d.subject}</span>
+        </div>
+        <div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">CNPJ</span>
+          <span class="font-mono font-semibold text-[12px]">${d.cnpj}</span>
+        </div>
+        ${d.city ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Município</span>
+          <span class="font-semibold text-[12px]">${d.city} – RS</span>
+        </div>` : ''}
+        ${d.cnae ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Atividade (CNAE)</span>
+          <span class="font-semibold text-[12px] text-right max-w-[55%]">${d.cnae}</span>
+        </div>` : ''}
+      </div>
+    </div>`;
+
+  const orientCard = `
+    <div class="bg-orange-50 border border-orange-200 rounded-lg p-md mt-sm text-body-sm">
+      <p class="font-bold text-orange-800 mb-xs flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">edit_note</span>
+        Prepare sua denúncia
+      </p>
+      <ul class="text-orange-700 space-y-xs list-none text-[12px]">
+        <li class="flex items-start gap-xs"><span>✏️</span><span>Elabore uma <strong>descrição clara do problema</strong> identificado: mencione datas, valores e nomes envolvidos.</span></li>
+        <li class="flex items-start gap-xs"><span>📎</span><span>Reúna <strong>documentos e evidências</strong> que possam comprovar a irregularidade.</span></li>
+        <li class="flex items-start gap-xs"><span>🔒</span><span>Você pode optar por denunciar <strong>anonimamente</strong> pelo portal do TCE-RS.</span></li>
+      </ul>
+    </div>`;
+
+  addBotMessage(
+    `<p class="font-bold text-on-surface mb-sm">Você está iniciando uma denúncia ao <span class="text-orange-700">Tribunal de Contas do Estado do RS (TCE-RS)</span>.</p>
+    <p class="text-body-sm text-on-surface-variant mb-sm">Confira os dados da empresa que você deseja denunciar:</p>
+    ${infoCard}
+    ${orientCard}
+    <div class="mt-sm">
+      <a href="https://tcers.tc.br/ouvidoria/denuncias-reclamacoes-sugestoes-e-elogios/" target="_blank"
+        class="flex items-center justify-center gap-sm w-full bg-orange-600 text-white py-sm px-md rounded-lg font-bold text-body-sm hover:opacity-90 transition-opacity mb-xs">
+        <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+        Acessar portal do TCE-RS
+      </a>
+      <p class="text-[11px] text-outline text-center">Use os dados acima ao preencher o formulário oficial.</p>
+    </div>`
+  );
+
+  denunciaState.step = 99;
+  disableInput(false);
+  setQuickChips([]);
+}
+
+/* ═══════════════════════════════════
+   Ministério Público FLOW (contratos)
+═══════════════════════════════════ */
+function showDenunciaContratoFlow() {
+  // Step 1: show contract/payment data and orient user to gather files
+  const d = denunciaState;
+
+  const infoCard = `
+    <div class="bg-surface-container rounded-lg p-md border border-outline-variant text-body-sm space-y-xs mt-sm">
+      <p class="font-bold text-on-surface text-[12px] mb-sm flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px] text-primary">receipt_long</span>
+        Dados do contrato / pagamento identificado
+      </p>
+      <div class="divide-y divide-outline-variant">
+        ${d.city ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Município</span>
+          <span class="font-semibold text-[12px]">${d.city} – RS</span>
+        </div>` : ''}
+        ${d.process ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Nº do Processo</span>
+          <span class="font-mono font-semibold text-[12px]">${d.process}</span>
+        </div>` : ''}
+        ${d.cnpj ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">CNPJ da Empresa</span>
+          <span class="font-mono font-semibold text-[12px]">${d.cnpj}</span>
+        </div>` : ''}
+        ${d.organ ? `<div class="flex justify-between py-xs">
+          <span class="text-outline font-bold uppercase text-[10px]">Órgão Contratante</span>
+          <span class="font-semibold text-[12px] text-right max-w-[60%]">${d.organ}</span>
+        </div>` : ''}
+      </div>
+    </div>`;
+
+  const orientCard = `
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-md mt-sm text-body-sm">
+      <p class="font-bold text-blue-800 mb-xs flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">folder_open</span>
+        Prepare sua documentação
+      </p>
+      <ul class="text-blue-700 space-y-xs list-none text-[12px]">
+        <li class="flex items-start gap-xs"><span>📎</span><span>Separe <strong>até 5 arquivos</strong> de comprovação: notas fiscais, fotografias, prints de tela, documentos oficiais, etc.</span></li>
+        <li class="flex items-start gap-xs"><span>✏️</span><span>Descreva a irregularidade com <strong>datas, valores e nomes</strong> dos envolvidos.</span></li>
+        <li class="flex items-start gap-xs"><span>🔒</span><span>Você pode optar por denunciar <strong>anonimamente</strong> diretamente no site do MPRS.</span></li>
+      </ul>
+    </div>`;
+
+  addBotMessage(
+    `<p class="font-bold text-on-surface mb-sm">Você está iniciando uma denúncia ao <span class="text-primary">Ministério Público do Estado do RS (MPRS)</span>.</p>
+    <p class="text-body-sm text-on-surface-variant mb-sm">Confira os dados do contrato/pagamento identificado:</p>
+    ${infoCard}
+    ${orientCard}`
+  );
+
+  denunciaState.step = 1;
+  disableInput(false);
+
+  // After a moment show the link message
+  setTimeout(() => {
+    showMPLinkMessage();
+  }, 600);
+}
+
+/* ═══════════════════════════════════
+   STEP 1 → user wrote description
+   Show the official link
+═══════════════════════════════════ */
+function showTCELinkMessage() {
+  addBotMessage(
+    `<p class="text-body-sm text-on-surface-variant mb-md">Observação registrada ✅</p>
+    <p class="text-body-sm text-on-surface mb-sm">Agora acesse o portal oficial do <strong>TCE-RS</strong> para registrar sua denúncia formalmente:</p>
+    <a href="https://tcers.tc.br/ouvidoria/denuncias-reclamacoes-sugestoes-e-elogios/" target="_blank"
+      class="flex items-center justify-center gap-sm w-full bg-orange-600 text-white py-sm px-md rounded-lg font-bold text-body-sm hover:opacity-90 transition-opacity mb-sm">
+      <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+      Acessar portal do TCE-RS
+    </a>
+    <p class="text-[11px] text-outline">Após acessar o link, use os dados da empresa e a descrição que você elaborou aqui para preencher o formulário oficial.</p>`
+  );
+  denunciaState.step = 99;
+}
+
+function showMPLinkMessage() {
+  addBotMessage(
+    `<p class="text-body-sm text-on-surface mb-sm">Acesse o portal oficial do <strong>Ministério Público do RS</strong> para registrar sua denúncia formalmente com os arquivos de comprovação:</p>
+    <a href="https://www.mprs.mp.br/atendimento/denuncia/" target="_blank"
+      class="flex items-center justify-center gap-sm w-full bg-primary text-white py-sm px-md rounded-lg font-bold text-body-sm hover:opacity-90 transition-opacity mb-sm">
+      <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+      Acessar portal do Ministério Público
+    </a>
+    <p class="text-[11px] text-outline">Lembre-se de anexar os arquivos de comprovação (até 5 arquivos) ao preencher o formulário oficial. Se preferir, descreva aqui suas observações antes de acessar o site.</p>`
+  );
+  denunciaState.step = 1; // still allow user to write notes
+}
+
+/* ═══════════════════════════════════════════
+   MESSAGE PROCESSING
+═══════════════════════════════════════════ */
+function processUserInput(text) {
+  const t = text.trim();
+  if (!t) return;
+
+  addUserMessage(t);
+
+  // Navigation shortcuts
+  if (t === '__nav_contratos') { goToDashboard('tab-a'); return; }
+  if (t === '__nav_empresa') { goToDashboard('tab-b'); return; }
+
+  const step = denunciaState.step;
+  const mode = denunciaState.mode;
+
+  // Idle mode — general chatbot
+  if (mode === 'idle') {
+    handleIdleChat(t);
+    return;
+  }
+
+  // TCE-RS flow: step 99 = user sends additional notes (link already shown)
+  if (mode === 'empresa' && step === 99) {
+    showTyping(() => {
+      addBotMessage(
+        `Anotação registrada ✅ Acesse o portal do TCE-RS pelo link acima para formalizar sua denúncia.
+        <br><br>
+        <a href="https://tcers.tc.br/ouvidoria/denuncias-reclamacoes-sugestoes-e-elogios/" target="_blank"
+          class="inline-flex items-center gap-xs text-orange-600 underline font-semibold text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">open_in_new</span>Portal TCE-RS
+        </a>`
+      );
+    }, 400);
+    return;
+  }
+
+  // MP flow: step 1 = user notes (we already showed the link)
+  if (mode === 'contrato' && step === 1) {
+    denunciaState.descricao = t;
+    showTyping(() => {
+      addBotMessage(
+        `Observação anotada ✅ Não se esqueça de acessar o portal do Ministério Público para registrar a denúncia oficial com seus arquivos de comprovação.
+        <br><br>
+        <a href="https://www.mprs.mp.br/atendimento/denuncia/" target="_blank"
+          class="inline-flex items-center gap-xs text-primary underline font-semibold text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">open_in_new</span>Portal Ministério Público RS
+        </a>`
+      );
+    }, 400);
+    return;
+  }
+
+  // Fallback
+  handleIdleChat(t);
+}
+
+function handleIdleChat(t) {
+  showTyping(() => {
+    addBotMessage('Olá! Sou o assistente do Portal da Transparência do RS. Use os botões nos contratos ou empresas para iniciar uma denúncia, ou navegue pelo portal para investigar irregularidades.');
+  });
+}
+
+/* ═══════════════════════════════════════════
+   FILE HANDLING
+═══════════════════════════════════════════ */
+function handleFileSelect(files) {
+  const list = document.getElementById('file-list');
+  Array.from(files).forEach(file => {
+    if (attachedFiles.find(f => f.name === file.name)) return;
+    attachedFiles.push(file);
+    const div = document.createElement('div');
+    div.className = 'flex items-center justify-between bg-surface-container-low px-sm py-xs rounded border border-outline-variant text-body-sm';
+    div.innerHTML = `<span class="flex items-center gap-xs truncate"><span class="material-symbols-outlined text-[16px] text-primary">attach_file</span>${file.name}</span>
+      <button onclick="removeFile('${file.name}', this)" class="text-outline hover:text-error ml-sm"><span class="material-symbols-outlined text-[16px]">close</span></button>`;
+    list.appendChild(div);
+  });
+}
+
+function removeFile(name, btn) {
+  attachedFiles = attachedFiles.filter(f => f.name !== name);
+  btn.closest('div').remove();
+}
+
+function skipFileUpload() {
+  attachedFiles = [];
+  addUserMessage('Pular anexos');
+  hideFileArea();
+  showInputArea();
+}
+
+function confirmFileUpload() {
+  if (attachedFiles.length > 0) {
+    addUserMessage(`${attachedFiles.length} arquivo(s) anexado(s)`);
+  } else {
+    addUserMessage('Sem anexos');
+  }
+  hideFileArea();
+  showInputArea();
+}
+
+function confirmDenuncia() {
+  addUserMessage('Confirmar envio da denúncia');
+  hideConfirmArea();
+}
+
+function cancelDenuncia() {
+  addUserMessage('Cancelar denúncia');
+  hideConfirmArea();
+  showInputArea();
+  resetDenuncia();
+  document.getElementById('chatbot-subtitle').textContent = '';
+  showTyping(() => {
+    addBotMessage('Operação cancelada.');
+  });
+}
+
+/* ═══════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════ */
+function addBotMessage(html) {
+  const container = document.getElementById('chat-messages');
+  const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const div = document.createElement('div');
+  div.className = 'flex flex-col items-start chat-bubble-in';
+  div.innerHTML = `
+    <div class="bg-surface-container p-md rounded-2xl rounded-tl-none text-body-sm max-w-[90%]">${html}</div>
+    <span class="text-[10px] text-outline mt-1 ml-1">Assistente • ${now}</span>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const container = document.getElementById('chat-messages');
+  const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const div = document.createElement('div');
+  div.className = 'flex flex-col items-end chat-bubble-in';
+  div.innerHTML = `
+    <div class="bg-primary text-white p-md rounded-2xl rounded-tr-none text-body-sm max-w-[90%]">${text}</div>
+    <span class="text-[10px] text-outline mt-1 mr-1">Você • ${now}</span>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping(callback, delay = 700) {
+  const container = document.getElementById('chat-messages');
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'flex flex-col items-start chat-bubble-in';
+  typingDiv.id = 'typing-bubble';
+  typingDiv.innerHTML = `<div class="bg-surface-container p-md rounded-2xl rounded-tl-none">
+    <div class="typing-indicator flex gap-1"><span></span><span></span><span></span></div>
+  </div>`;
+  container.appendChild(typingDiv);
+  container.scrollTop = container.scrollHeight;
+  setTimeout(() => {
+    typingDiv.remove();
+    callback();
+  }, delay);
+}
+
+function setQuickChips(chips) {
+  const el = document.getElementById('quick-chips');
+  el.innerHTML = chips.map(c => `
+    <button onclick="processUserInput('${c.value}')"
+      class="text-[11px] px-3 py-1 bg-surface-container-low border border-outline-variant rounded-full hover:bg-primary hover:text-white transition-colors">
+      ${c.label}
+    </button>`).join('');
+}
+
+function disableInput(disabled) {
+  const input = document.getElementById('chat-input');
+  input.disabled = disabled;
+  input.placeholder = disabled ? 'Use os botões acima para continuar...' : 'Digite suas observações...';
+}
+
+function showFileArea() {
+  document.getElementById('chat-file-area').classList.remove('hidden');
+  document.getElementById('chat-input-area').classList.add('hidden');
+}
+
+function hideFileArea() {
+  document.getElementById('chat-file-area').classList.add('hidden');
+}
+
+function showInputArea() {
+  document.getElementById('chat-input-area').classList.remove('hidden');
+}
+
+function hideInputArea() {
+  document.getElementById('chat-input-area').classList.add('hidden');
+}
+
+function showConfirmArea() {
+  document.getElementById('chat-confirm-area').classList.remove('hidden');
+  document.getElementById('chat-input-area').classList.add('hidden');
+}
+
+function hideConfirmArea() {
+  document.getElementById('chat-confirm-area').classList.add('hidden');
+  document.getElementById('chat-input-area').classList.remove('hidden');
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const val = input.value.trim();
+  if (!val) return;
+  input.value = '';
+  processUserInput(val);
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter') sendChatMessage();
+}
+
+// Drag and drop
+document.addEventListener('DOMContentLoaded', () => {
+  const zone = document.getElementById('file-drop-zone');
+  if (zone) {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      handleFileSelect(e.dataTransfer.files);
+    });
+  }
+  initChatIdle();
+});
+
+function initChatIdle() {
+  document.getElementById('chat-messages').innerHTML = '';
+  addBotMessage('Olá! Sou o assistente do Portal da Transparência do RS. Posso ajudar a investigar contratos, empresas ou irregularidades. O que você gostaria de saber?');
+}
+
+/* ═══════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════ */
+initContracts();
+initCompanies();
+</script>
+</body>
+</html>
+
