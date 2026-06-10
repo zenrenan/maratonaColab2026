@@ -1,4 +1,4 @@
-# maratonaColab2026
+# MaratonaColab2026 - Equipe vencedora 
 A 3ª MaratonaColab é uma competição que faz parte do Simpósio Brasileiro de Sistemas
 Colaborativos – SBSC 2026 (https://sbsc.sbc.org.br/2026/index.php/maratonacolab/) e
 seu objetivo principal é estimular os participantes a proporem soluções para problemas
